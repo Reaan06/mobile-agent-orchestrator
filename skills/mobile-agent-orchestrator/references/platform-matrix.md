@@ -66,7 +66,7 @@ loginctl show-user "$USER" -p Linger
 schtasks /query /tn "<task-name>" /fo LIST /v
 ```
 
-Linger and a startup task can start configured services after boot; they do not preserve running agent processes across a physical reboot. Only persisted Pi JSONL sessions may resume from disk.
+Linger and a startup task can start configured services after boot; they do not preserve running agent processes across a physical reboot. A host-specific persisted checkpoint may resume only when that host documents and the human observes the behavior. Pi JSONL resume is specific to Pi and must not be claimed for other CLIs.
 
 ## Permission and rollback gate
 

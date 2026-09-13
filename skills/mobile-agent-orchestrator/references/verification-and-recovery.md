@@ -8,7 +8,7 @@ Collect non-sensitive evidence after every approved mutation. A command failing 
 2. **SSH:** test public-key authentication in a second session before closing the recovery session. Confirm Tailscale SSH remains disabled for this route.
 3. **Mosh:** establish a mobile-route session, briefly disconnect the client network, reconnect, and record whether Mosh reconnects as expected.
 4. **Host:** confirm Herdr or tmux behavior, checkpoint creation, selected integration authorization, and notification delivery without recording contents.
-5. **Lifecycle:** only after explicit reboot approval, test the documented start and Pi JSONL session resume path.
+5. **Lifecycle:** only after explicit reboot approval, test the documented start and the invoking host's documented checkpoint/resume path. Pi JSONL resume is tested only when Pi is the host.
 
 Useful read-only checks:
 
@@ -51,11 +51,11 @@ Interpret listener output with the firewall and overlay policy; a listening port
 | Tailscale appears on both Windows and WSL | Stop the full-Mosh route; preserve one reachable path; request approval to remove or stop one placement. |
 | Mosh does not reconnect | Keep SSH recovery available; inspect overlay and SSH evidence first; do not expose a public port as a workaround. |
 | Keepalive, linger, or lifecycle fails | Collect service/task status and current official documentation; do not claim persistence. |
-| Reboot loses a live terminal process | Treat as expected; resume only persisted Pi JSONL sessions from disk and restart required processes through the approved lifecycle path. |
+| Reboot loses a live terminal process | Treat as expected; restart required processes through the approved lifecycle path and resume only a host-supported persisted checkpoint. Pi JSONL resume is Pi-specific. |
 
 ## Reboot gate
 
-Before reboot, ask explicit approval and state that all live processes will die. Verify a local recovery path, the key-auth path, rollback instructions, and the Windows task or macOS lifecycle evidence first. After reboot, check the actual startup state, re-establish private-overlay SSH and Mosh, then resume persisted Pi JSONL sessions from disk if available.
+Before reboot, ask explicit approval and state that all live processes will die. Verify a local recovery path, the key-auth path, rollback instructions, and the Windows task or macOS lifecycle evidence first. After reboot, check the actual startup state, re-establish private-overlay SSH and Mosh, then resume a persisted checkpoint only if the invoking host supports it and the path is available. For Pi, this may be the local JSONL session path.
 
 **Draft evidence status:** cold-boot and post-reboot behavior remain pending until a human observes and records this sequence on the selected supported target. Do not mark the installation reboot-verified before that evidence exists.
 

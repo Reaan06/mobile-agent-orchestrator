@@ -7,7 +7,7 @@
 
   <img width="3469" height="1198" alt="moshi" src="https://github.com/user-attachments/assets/aa5ed0b7-bd0c-4612-a3fd-58876c4eccab" />
 
-  <p>A guided Pi skill for a private, recoverable mobile AI-agent environment.</p>
+  <p>A guided Agent Skill for a private, recoverable mobile AI-agent environment.</p>
 
   <p>
     <a href="https://github.com/egdev6/mobile-agent-orchestrator/actions/workflows/ci.yml"><img src="https://img.shields.io/github/actions/workflow/status/egdev6/mobile-agent-orchestrator/ci.yml?branch=main&amp;label=package%20CI&amp;style=for-the-badge" alt="Package CI"></a>
@@ -27,7 +27,7 @@
 
 <details>
   <summary>Table of Contents</summary>
-  <ol>
+<ol>
     <li><a href="#prerequisites">Prerequisites</a></li>
     <li><a href="#installation">Installation</a></li>
     <li><a href="#usage">Usage</a></li>
@@ -59,7 +59,7 @@
 
 | Requirement | Why it matters |
 | --- | --- |
-| A working [Pi Coding Agent][pi] installation | Pi packages and skills can instruct an agent to make system changes. Review the source if you need to assess its system-change guidance. |
+| A working Agent Skills-compatible CLI | The skill can instruct an agent to make system changes. Review the source if you need to assess its system-change guidance. [Pi](#pi) remains a supported package host. |
 | **macOS native** | Supported native lifecycle and execution target. |
 | **Windows 11 with WSL2** | Supported split model: Windows owns startup; the selected WSL distribution runs Linux services and agents. |
 | Windows native without WSL2 | **Unsupported.** Stop and install WSL2 before using this workflow. |
@@ -70,7 +70,21 @@ The guided workflow discovers its runtime state before proposing changes. It ins
 
 ## Installation
 
-### Recommended: install stable v0.1.0 from Git
+### Agent Skills-compatible CLIs
+
+Copy or link `skills/mobile-agent-orchestrator/` as `mobile-agent-orchestrator/` under one of the host's supported skill roots. The generic contract is one directory per skill containing a `SKILL.md`; references remain relative to that file. The host discovers and activates the skill, but host-specific persistence, lifecycle, and slash-command behavior must not be inferred from this repository.
+
+For OpenCode, use any supported location:
+
+- Project: `.opencode/skills/mobile-agent-orchestrator/SKILL.md` or `.agents/skills/mobile-agent-orchestrator/SKILL.md`
+- Global: `~/.config/opencode/skills/mobile-agent-orchestrator/SKILL.md` or `~/.agents/skills/mobile-agent-orchestrator/SKILL.md`
+- Configured path: add the containing directory, for example `skills: ["./skills"]`, then place the skill at `./skills/mobile-agent-orchestrator/SKILL.md`
+
+Start OpenCode from the relevant project and use its discovered-skill interface or a matching natural-language request. OpenCode may disable external skill directories through configuration; configured skill paths remain the explicit fallback. This is an Agent Skill, not an MCP server, and requires no MCP implementation.
+
+### Pi
+
+#### Recommended: install stable v0.1.0 from Git
 
 ```bash
 pi install git:github.com/egdev6/mobile-agent-orchestrator@v0.1.0
@@ -78,7 +92,7 @@ pi install git:github.com/egdev6/mobile-agent-orchestrator@v0.1.0
 
 Git tags—not npm publication—are this project's distribution channel. The release tag is created by automation after a validated release pull request merges; see the [release guide][release-guide] for the release conditions.
 
-### Source-review or development option: install from a local checkout
+#### Source-review or development option: install from a local checkout
 
 1. Review this repository, especially the [skill][skill] and its on-demand references.
 2. Install the reviewed local package:
@@ -93,20 +107,20 @@ Git tags—not npm publication—are this project's distribution channel. The re
 
 ## Usage
 
-Use the skill from an active Pi session:
+Use the skill from an active Agent Skills-compatible session. For Pi, the existing activation command remains:
 
 ```text
 /skill:mobile-agent-orchestrator
 ```
 
-A matching natural-language request, such as “set up a private mobile Pi environment with Tailscale and Mosh,” can also load the skill. Follow the guided path rather than running an installation recipe out of order:
+A matching natural-language request, such as “set up a private mobile agent environment with Tailscale and Mosh,” can also load the skill. Follow the guided path rather than running an installation recipe out of order:
 
 1. **Detect:** allow read-only platform and state checks; unsupported or unclear targets stop safely.
 2. **Decide:** answer only real decision gates, including Tailscale placement, key setup, Moshi privacy, integrations, and notifications.
 3. **Approve:** explicitly authorize each privileged, network, service, firewall, pairing, lifecycle, or reboot mutation before it happens.
 4. **Verify:** collect non-sensitive checkpoints after each approved mutation and use the [recovery guide][verification-recovery] when a check fails.
 
-The skill is a human-supervised orchestrator, not an unattended installer. Platform detail lives in the [platform matrix][platform-matrix] and [guided install][guided-install] reference so the core workflow stays concise.
+The skill is a human-supervised orchestrator, not an unattended installer. Platform detail lives in the [platform matrix][platform-matrix] and [guided install][guided-install] reference so the core workflow stays concise. Lifecycle and checkpoint semantics are host-specific; the skill does not promise that another CLI provides Pi's persistence behavior.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -115,7 +129,7 @@ The skill is a human-supervised orchestrator, not an unattended installer. Platf
 ```text
 mobile-agent-orchestrator/
 ├── package.json
-│   └── pi.skills: ./skills ──> Pi package discovery
+│   └── pi.skills: ./skills ──> Pi package discovery (preserved)
 ├── skills/mobile-agent-orchestrator/
 │   ├── SKILL.md ────────────> activation contract, decision gates, safe orchestration
 │   └── references/ ─────────> loaded on demand: platform, installation, recovery
@@ -126,7 +140,7 @@ mobile-agent-orchestrator/
     └── tag-release.yml ─────> validated, merged-PR-only stable Git tags
 ```
 
-Pi discovers the package's `skills/` directory through the `pi.skills` manifest. The `SKILL.md` file uses Agent Skills-compatible Markdown and YAML frontmatter; its references are deliberately loaded only when the workflow needs their detail. The validator and GitHub Actions verify the package and gate future tags, but they do not certify a live remote-agent deployment.
+Pi discovers the package's `skills/` directory through the `pi.skills` manifest. Other compatible CLIs discover the same skill through their own supported roots or configured paths. The `SKILL.md` file uses Agent Skills-compatible Markdown and YAML frontmatter; its references are deliberately loaded only when the workflow needs their detail. The validator and GitHub Actions verify the package and gate future tags, but they do not certify a live remote-agent deployment.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -149,7 +163,7 @@ The package implementation and the remote environment it orchestrates are separa
 
 | Layer | Components | Responsibility |
 | --- | --- | --- |
-| **Package implementation** | Pi package manifest, Agent Skills-compatible Markdown/YAML frontmatter, Node.js ESM validator, npm, GitHub Actions | Discovers the skill, validates package metadata and contents, and runs CI/release checks. |
+| **Package implementation** | Pi package manifest, Agent Skills-compatible Markdown/YAML frontmatter, Node.js ESM validator, npm, GitHub Actions | Preserves Pi discovery while validating the portable skill package and running CI/release checks. |
 | **Orchestrated runtime** | Tailscale, OpenSSH, Mosh, Moshi/`moshi-hook`, Herdr or tmux | Provides the private mobile connection and persistent-session workflow on the selected target. |
 | **Platform lifecycle** | Windows 11 + WSL2 systemd/linger/startup mechanisms, or macOS lifecycle mechanisms | Starts only the specifically approved services using current platform documentation. |
 
@@ -172,7 +186,7 @@ Tailscale, OpenSSH, Mosh, Moshi, `moshi-hook`, Herdr, tmux, and platform lifecyc
 
 After each approved mutation, the workflow captures non-sensitive evidence for the private overlay, key-authenticated SSH, Mosh reconnection, session host, checkpoints, integrations, and notifications. A missing component or failed check is a finding—not authorization to make another change.
 
-Before an approved reboot, the guide states that live processes will die, confirms recovery and rollback paths, then checks the actual post-reboot state. Herdr and tmux do not preserve live processes across a physical reboot; supported Pi JSONL sessions may resume from local disk. Independently recorded cold-boot and live runtime evidence is not published for v0.1.0, so validate lifecycle and recovery on your target.
+Before an approved reboot, the guide states that live processes will die, confirms recovery and rollback paths, then checks the actual post-reboot state. Herdr and tmux do not preserve live processes across a physical reboot. A host may provide its own persisted checkpoint or resume mechanism; only Pi's supported JSONL behavior is described here, and no equivalent is claimed for other CLIs. Independently recorded cold-boot and live runtime evidence is not published for v0.1.0, so validate lifecycle and recovery on your target.
 
 Read the full [verification and recovery guide][verification-recovery] before applying lifecycle or rollback changes.
 

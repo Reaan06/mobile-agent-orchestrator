@@ -1,6 +1,6 @@
 ---
 name: mobile-agent-orchestrator
-description: "Trigger: mobile agent setup, mobile orchestrator, Moshi, Mosh, Tailscale, remote Pi. Guide a human through a safe persistent mobile AI-agent installation."
+description: "Trigger: mobile agent setup, mobile orchestrator, Moshi, Mosh, Tailscale, remote mobile agent. Guide a human through a safe, host-aware mobile AI-agent installation."
 license: MIT
 metadata:
   author: egdev6
@@ -9,13 +9,13 @@ metadata:
 
 ## Activation Contract
 
-Use for human-supervised installation of a persistent mobile AI-agent environment. Support only macOS native or Windows 11 with WSL2 (Windows lifecycle, WSL Linux execution). Detect state read-only before change. On Windows native without WSL, stop and guide WSL2; never offer degraded native Windows.
+Use for human-supervised installation of a mobile AI-agent environment and its host-supported lifecycle or checkpoint path. This is an Agent Skill, not an MCP server. Support only macOS native or Windows 11 with WSL2 (Windows lifecycle, WSL Linux execution). Detect state read-only before change. On Windows native without WSL, stop and guide WSL2; never offer degraded native Windows. Do not assume that the invoking CLI provides Pi's persistence or lifecycle behavior.
 
 ## Hard Rules
 
 Never request or persist private keys, pairing tokens, sign-in URLs, QR contents, or credentials. Use device-local pairing or hidden terminal input; QR data is temporary secret material. Never open public SSH or router ports. For full Mosh, run Tailscale exactly once: on macOS or WSL, never Windows and WSL together. Disable Tailscale SSH with Moshi/OpenSSH key auth. Inspect remote installers before execution or prefer signed package managers.
 
-Ask one question only when detection leaves a real decision or authorization. Obtain explicit approval before elevated installs, firewall/auth changes, cloud pairing, scheduled tasks, reboot, or destructive rollback. Configure firewall restrictions before enabling services, preserve local recovery, and validate SSH syntax before restart. Do not claim live processes, Herdr/tmux, or systemd survive physical reboot; persisted Pi JSONL sessions may resume from disk.
+Ask one question only when detection leaves a real decision or authorization. Obtain explicit approval before elevated installs, firewall/auth changes, cloud pairing, scheduled tasks, reboot, or destructive rollback. Configure firewall restrictions before enabling services, preserve local recovery, and validate SSH syntax before restart. Do not claim live processes, Herdr/tmux, or systemd survive physical reboot. Use only observed, host-specific checkpoint or resume evidence; Pi JSONL resume behavior is a Pi-specific capability and must not be generalized.
 
 ## Decision Gates
 
@@ -33,7 +33,7 @@ Ask one question only when detection leaves a real decision or authorization. Ob
 2. Establish permissions, rollback, local recovery, and network exposure boundaries.
 3. Install and verify OpenSSH, Tailscale, mobile clients, Moshi, `moshi-hook`, Mosh, and Herdr or tmux using the guided reference.
 4. Test key authentication before optional strict SSH hardening; keep Tailscale SSH off.
-5. Configure the approved lifecycle path, privacy level, integrations, notifications, and Pi JSONL checkpoint/resume procedure.
+5. Configure the approved lifecycle path, privacy level, integrations, notifications, and the host-supported checkpoint/resume procedure. On Pi, this may be the supported local JSONL procedure; do not invent an equivalent for another CLI.
 6. Run disconnect and approved reboot recovery verification. Mark cold-boot behavior as pending whenever observed evidence is unavailable.
 
 ## Output Contract

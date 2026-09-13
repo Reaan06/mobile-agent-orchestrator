@@ -80,10 +80,10 @@ Choose Herdr when installed and supported by current documentation; otherwise us
 tmux new-session -As mobile-agent
 ```
 
-Neither Herdr nor tmux preserves live processes across physical reboot. Only persisted Pi JSONL sessions may resume from disk.
+Neither Herdr nor tmux preserves live processes across physical reboot. Use a persisted checkpoint or resume mechanism only when the invoking host documents and the human verifies it; Pi JSONL sessions may resume from disk under Pi's supported behavior, with no equivalent assumed elsewhere.
 
 ## 5. Lifecycle, checkpoints, and notifications
 
 On the Windows route, follow the approved WSL systemd, linger, and Windows keepalive sequence in the platform matrix. On macOS, require current official lifecycle evidence before creating a persistent service. Never state that the service will survive reboot until it has passed the recovery verification.
 
-Ask whether to enable session checkpoints only after the chosen session host is working. Configure checkpoints to store only supported Pi JSONL sessions on local disk; they may resume from disk, but all live processes die on reboot. Record the Pi JSONL session resume command or UI route without recording session contents. Enable approved notifications last and verify with a non-sensitive test event.
+Ask whether to enable session checkpoints only after the chosen session host is working. Configure only the invoking host's supported checkpoint format and local storage; do not claim that another CLI can resume Pi JSONL sessions. All live processes die on reboot. For Pi, record the supported JSONL session resume command or UI route without recording session contents. Enable approved notifications last and verify with a non-sensitive test event.
