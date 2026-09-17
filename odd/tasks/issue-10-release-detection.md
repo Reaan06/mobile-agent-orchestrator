@@ -76,8 +76,8 @@ Do not alter merged-PR provenance, ancestry checks, annotated-tag creation, tag 
 ### T5 — Close the work unit
 
 - [x] Review the diff and authored line count.
-- [ ] Create one Conventional Commit containing the detector, workflow integration, and tests.
-- [ ] Record the commit identity here.
+- [x] Create one Conventional Commit containing the detector, workflow integration, and tests.
+- [x] Record the commit identity here.
 
 ## Progress and evidence
 
@@ -87,9 +87,9 @@ Do not alter merged-PR provenance, ancestry checks, annotated-tag creation, tag 
 - Reproduction on base: `node scripts/validate-package.mjs --release-transition 0.1.0 0.1.0` exits 1 with the strict-increase error.
 - Verification: `npm test` passed (`Package validation passed.`); `node --test tests/detect-release.test.mjs` passed (7 tests); `git diff --check` passed. The workflow diff changes only release-detection integration; provenance and tag-job sections remain unchanged.
 - Parent readback: unchanged versions retain the workflow's default `should_tag=false` output; only valid releases append detector outputs, avoiding duplicate output keys.
-- Diff review: staged diff contains 191 authored insertions/deletions across four intended files and passes `git diff --cached --check`.
-- Commit: pending.
+- Diff review: implementation diff contained 192 authored insertions/deletions across four intended files and passed `git diff --cached --check`.
+- Commit: `df32b99` (`fix(release): skip unchanged package versions`).
 
 ## Next step
 
-Implementation and verification are complete; the parent should create the work-unit commit.
+Implementation, verification, and the work-unit commit are complete. The branch is ready for the user-owned PR decision.
