@@ -66,8 +66,8 @@ Do not implement installer behavior, npm publication, release workflow changes, 
 ### T4 — Close the work unit
 
 - [x] Review the diff and authored line count.
-- [ ] Create one Conventional Commit containing implementation and tests.
-- [ ] Record the commit identity here.
+- [x] Create one Conventional Commit containing implementation and tests.
+- [x] Record the commit identity here.
 
 ## Progress and evidence
 
@@ -77,8 +77,8 @@ Do not implement installer behavior, npm publication, release workflow changes, 
 - Exploration: current validator exports pure helper seams but has no test directory and hardcodes seven tarball files.
 - Verification: `npm test` and `npm run pack:check` passed after implementation; unit tests cover the recursive inventory and publication boundary.
 - Diff review: `git diff --check` passed; intended source, test, package, and task-document changes only.
-- Commit: pending.
+- Commit: `ec07b3c` (`feat(package): make validation extensible`).
 
 ## Next step
 
-Implementation and tests are complete; parent should inspect the diff and create the work-unit commit.
+Implementation, tests, verification, and the work-unit commit are complete. The branch is ready for the user-owned PR decision.
