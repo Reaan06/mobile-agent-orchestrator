@@ -76,10 +76,10 @@ Do not implement installer behavior, npm publication, release workflow changes, 
 - Maintainer update: issue #9 comment published before implementation.
 - Exploration: current validator exports pure helper seams but has no test directory and hardcodes seven tarball files.
 - Verification: `npm test` and `npm run pack:check` passed after implementation; unit tests cover the recursive inventory and publication boundary.
-- Follow-up fix: `npm test` now uses Node's test auto-discovery (`node --test`) instead of passing `tests` as a module path; local verification passes on Node v26.9.0. CI rerun is pending.
+- Follow-up fix: `npm test` now uses Node's test auto-discovery (`node --test`) instead of passing `tests` as a module path; local verification passes on Node v26.9.0 and Package CI run `35366849908` passes on Node 22.
 - Diff review: `git diff --check` passed; intended source, test, package, and task-document changes only.
 - Commit: `ec07b3c` (`feat(package): make validation extensible`).
 
 ## Next step
 
-Implementation and tests are complete. The corrective change is ready to push and re-run Package CI before the user-owned merge decision.
+Implementation, tests, and the corrective CI verification are complete. The branch is ready for the user-owned merge decision.
